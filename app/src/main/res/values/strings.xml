@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">FirebaseFirestoreLearn</string>
+
+    <string name="message_success_save_person">Person saved</string>
+    <string name="message_error_save_person">Error: Person did not save.</string>
+    <string name="cd_icon_person">Person</string>
+    <string name="button_text_save">Save</string>
+    <string name="ui_text_person_ready_state">Person ready state</string>
+    <string name="label_1">Name length must be in 3..10</string>
+    <string name="label_2">Enter Name</string>
 </resources>
