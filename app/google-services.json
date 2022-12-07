@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "620833358686",
+    "project_id": "fir-firestorelearn",
+    "storage_bucket": "fir-firestorelearn.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:620833358686:android:3d946670382070bec3c5cf",
+        "android_client_info": {
+          "package_name": "by.godevelopment.firebasefirestorelearn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "620833358686-vcc7pbhm3dkagvdq8s8k7ccvd9c2eqlm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDWnqQtTBLR_jmylILuTXp1fprlZVUJH0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "620833358686-vcc7pbhm3dkagvdq8s8k7ccvd9c2eqlm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

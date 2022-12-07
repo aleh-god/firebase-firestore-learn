@@ -1,4 +1,4 @@
-package by.godevelopment.firebasefirestorelearn.ui.screens.main
+package by.godevelopment.firebasefirestorelearn.ui.screens.saveperson
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
@@ -16,22 +16,22 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import by.godevelopment.firebasefirestorelearn.R
-import by.godevelopment.firebasefirestorelearn.ui.MainViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun MainScreen(
+fun SavePersonScreen(
     scaffoldState: ScaffoldState,
     contentPadding: PaddingValues,
-    viewModel: MainViewModel
+    viewModel: SavePersonViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
     val keyboardController = LocalSoftwareKeyboardController.current
 
     LaunchedEffect(key1 = true) {
-        viewModel.mainUiEvent.collect { event ->
+        viewModel.savePersonUiEvent.collect { event ->
             when (event) {
-                is MainUiEvent.ShowSnackbar -> {
+                is SavePersonUiEvent.ShowSnackbar -> {
                     scaffoldState.snackbarHostState.showSnackbar(
                         message = event.message.asString(context)
                     )
@@ -62,7 +62,7 @@ fun MainScreen(
                 onDone = {keyboardController?.hide()}),
             value = viewModel.uiState.name,
             onValueChange = {
-                viewModel.onEvent(MainUserEvent.OnNameChanged(it))
+                viewModel.onEvent(SavePersonUserEvent.OnNameChanged(it))
             },
             label = {
                 Text(
@@ -87,7 +87,7 @@ fun MainScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Switch(checked = viewModel.uiState.isReady, onCheckedChange = {
-                viewModel.onEvent(MainUserEvent.PersonReadyStateChanged)
+                viewModel.onEvent(SavePersonUserEvent.PersonReadyStateChanged)
             })
 
             Spacer(Modifier.width(8.dp))
@@ -96,7 +96,7 @@ fun MainScreen(
         }
 
         Button(
-            onClick = { viewModel.onEvent(MainUserEvent.OnSavePersonClick) },
+            onClick = { viewModel.onEvent(SavePersonUserEvent.OnSavePersonClick) },
             contentPadding = PaddingValues(
                 start = 20.dp,
                 top = 12.dp,
