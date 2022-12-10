@@ -1,4 +1,4 @@
-package by.godevelopment.firebasefirestorelearn.ui.screens.saveperson
+package by.godevelopment.firebasefirestorelearn.ui.screens.updateperson
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
@@ -6,7 +6,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -16,28 +17,27 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import by.godevelopment.firebasefirestorelearn.R
 import androidx.hilt.navigation.compose.hiltViewModel
+import by.godevelopment.firebasefirestorelearn.R
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun SavePersonScreen(
+fun UpdatePersonScreen(
     scaffoldState: ScaffoldState,
     contentPadding: PaddingValues,
-    viewModel: SavePersonViewModel = hiltViewModel()
+    viewModel: UpdatePersonViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
     val keyboardController = LocalSoftwareKeyboardController.current
 
     LaunchedEffect(key1 = true) {
-        viewModel.savePersonUiEvent.collect { event ->
+        viewModel.updatePersonUiEvent.collect { event ->
             when (event) {
-                is SavePersonUiEvent.ShowSnackbar -> {
+                is UpdatePersonUiEvent.ShowSnackbar -> {
                     scaffoldState.snackbarHostState.showSnackbar(
                         message = event.message.asString(context)
                     )
                 }
-                else -> Unit
             }
         }
     }
@@ -51,16 +51,20 @@ fun SavePersonScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
+        if (viewModel.uiState.isProcessing) LinearProgressIndicator(
+            modifier = Modifier.fillMaxWidth()
+        )
+
         Text(
-            text = "Persons count = ${viewModel.uiState.personsCount}",
-            style = MaterialTheme.typography.h6,
+            text = "Old name value:",
+            style = MaterialTheme.typography.subtitle1,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 4.dp)
         )
 
-        if (viewModel.uiState.isProcessing) LinearProgressIndicator()
+        Spacer(Modifier.height(4.dp))
 
         TextField(
             singleLine = true,
@@ -69,44 +73,72 @@ fun SavePersonScreen(
                 imeAction = ImeAction.Done
             ),
             keyboardActions = KeyboardActions(
-                onDone = {keyboardController?.hide()}),
-            value = viewModel.uiState.name,
+                onDone = { keyboardController?.hide() }
+            ),
+            value = viewModel.uiState.oldName,
             onValueChange = {
-                viewModel.onEvent(SavePersonUserEvent.OnNameChanged(it))
+                viewModel.onEvent(UpdatePersonUserEvent.OldNameOnChanged(it))
             },
             label = {
                 Text(
-                if (viewModel.uiState.hasError) stringResource(R.string.label_1)
-                else stringResource(R.string.label_2)
-            )
-                    },
-            isError = viewModel.uiState.hasError,
+                    if (viewModel.uiState.oldNameHasError) stringResource(R.string.label_1)
+                    else stringResource(R.string.label_2)
+                )
+            },
+            isError = viewModel.uiState.oldNameHasError,
             placeholder = {
                 Text(
-                    text = if (viewModel.uiState.hasError) stringResource(R.string.label_2)
+                    text = if (viewModel.uiState.oldNameHasError) stringResource(R.string.label_2)
                     else stringResource(R.string.label_1)
                 )
             },
         )
 
-        Row(
+        Spacer(Modifier.height(16.dp))
+
+        Text(
+            text = "New name value:",
+            style = MaterialTheme.typography.subtitle1,
+            textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Switch(checked = viewModel.uiState.isReady, onCheckedChange = {
-                viewModel.onEvent(SavePersonUserEvent.PersonReadyStateChanged)
-            })
+                .padding(vertical = 4.dp)
+        )
 
-            Spacer(Modifier.width(8.dp))
+        Spacer(Modifier.height(4.dp))
 
-            Text(text = stringResource(R.string.ui_text_person_ready_state))
-        }
+        TextField(
+            singleLine = true,
+            maxLines = 10,
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Done
+            ),
+            keyboardActions = KeyboardActions(
+                onDone = { keyboardController?.hide() }
+            ),
+            value = viewModel.uiState.newName,
+            onValueChange = {
+                viewModel.onEvent(UpdatePersonUserEvent.NewNameOnChanged(it))
+            },
+            label = {
+                Text(
+                    if (viewModel.uiState.newNameHasError) stringResource(R.string.label_1)
+                    else stringResource(R.string.label_2)
+                )
+            },
+            isError = viewModel.uiState.newNameHasError,
+            placeholder = {
+                Text(
+                    text = if (viewModel.uiState.newNameHasError) stringResource(R.string.label_2)
+                    else stringResource(R.string.label_1)
+                )
+            },
+        )
+
+        Spacer(Modifier.height(16.dp))
 
         Button(
-            onClick = { viewModel.onEvent(SavePersonUserEvent.OnSavePersonClick) },
+            onClick = { viewModel.onEvent(UpdatePersonUserEvent.OnUpdatePersonClick) },
             contentPadding = PaddingValues(
                 start = 20.dp,
                 top = 12.dp,
@@ -120,7 +152,7 @@ fun SavePersonScreen(
                 modifier = Modifier.size(ButtonDefaults.IconSize)
             )
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-            Text(stringResource(R.string.button_text_save))
+            Text(stringResource(R.string.button_text_update))
         }
     }
 }

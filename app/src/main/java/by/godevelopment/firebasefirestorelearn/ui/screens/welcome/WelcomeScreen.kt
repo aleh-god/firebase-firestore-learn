@@ -26,6 +26,7 @@ fun WelcomeScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Route.values()
+            .drop(1)
             .forEach {
                 Button(
                     modifier = Modifier

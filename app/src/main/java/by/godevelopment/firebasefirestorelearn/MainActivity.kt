@@ -11,7 +11,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import by.godevelopment.firebasefirestorelearn.navigation.Route
+import by.godevelopment.firebasefirestorelearn.ui.screens.loadpersons.LoadPersonScreen
+import by.godevelopment.firebasefirestorelearn.ui.screens.personslist.PersonsListScreen
 import by.godevelopment.firebasefirestorelearn.ui.screens.saveperson.SavePersonScreen
+import by.godevelopment.firebasefirestorelearn.ui.screens.updateperson.UpdatePersonScreen
 import by.godevelopment.firebasefirestorelearn.ui.screens.welcome.WelcomeScreen
 import by.godevelopment.firebasefirestorelearn.ui.theme.FirebaseFirestoreLearnTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,8 +52,17 @@ class MainActivity : ComponentActivity() {
                                 },
                                 contentPadding = padding)
                         }
-                        composable(Route.LOAD_PERSON.label) {
+                        composable(Route.SAVE_PERSON.label) {
                             SavePersonScreen(scaffoldState = scaffoldState, contentPadding = padding)
+                        }
+                        composable(Route.LOAD_PERSON.label) {
+                            LoadPersonScreen(scaffoldState = scaffoldState, contentPadding = padding)
+                        }
+                        composable(Route.UPDATE_PERSON.label) {
+                            UpdatePersonScreen(scaffoldState = scaffoldState, contentPadding = padding)
+                        }
+                        composable(Route.LIST_PERSONS.label) {
+                            PersonsListScreen(scaffoldState = scaffoldState, contentPadding = padding)
                         }
                     }
                 }
