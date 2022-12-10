@@ -109,7 +109,7 @@ class SavePersonViewModel @Inject constructor(
                             resId = when (result) {
                                 is FireStoreResult.Error -> {
                                     Log.i("TAG#SavePersonViewModel", "Error -> ${result.message}")
-                                    R.string.message_error_save_person
+                                    result.message
                                 }
                                 is FireStoreResult.Success -> {
                                     R.string.message_success_save_person

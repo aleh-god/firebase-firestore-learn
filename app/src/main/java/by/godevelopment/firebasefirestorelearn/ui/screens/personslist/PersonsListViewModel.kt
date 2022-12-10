@@ -35,10 +35,10 @@ class PersonsListViewModel @Inject constructor(
             val persons = personsListRepository.loadPersons()
             when (persons) {
                 is FireStoreResult.Error -> {
-                    Log.i("TAG#PersonsListViewModel", persons.message)
+                    Log.i("TAG#PersonsListViewModel", "${persons.message}")
                     _personsListUiEvent.send(
                         PersonsListUiEvent.ShowSnackbar(
-                            UiText.StringResource(R.string.message_error_load_data)
+                            UiText.StringResource(persons.message)
                         )
                     )
                 }

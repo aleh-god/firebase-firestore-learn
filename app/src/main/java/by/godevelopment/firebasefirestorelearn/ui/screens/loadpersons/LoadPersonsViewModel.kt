@@ -50,9 +50,7 @@ class LoadPersonsViewModel @Inject constructor(
                     uiState = uiState.copy(isProcessing = false)
                     _loadPersonsUiEvent.send(
                         LoadPersonsUiEvent.ShowSnackbar(
-                            UiText.StringResource(
-                                R.string.message_error_load_data
-                            )
+                            UiText.StringResource(result.message)
                         )
                     )
                 }

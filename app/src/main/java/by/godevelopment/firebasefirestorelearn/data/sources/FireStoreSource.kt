@@ -1,8 +1,12 @@
 package by.godevelopment.firebasefirestorelearn.data.sources
 
+import by.godevelopment.firebasefirestorelearn.R
 import by.godevelopment.firebasefirestorelearn.domain.models.FireStoreResult
 import by.godevelopment.firebasefirestorelearn.domain.models.Person
+import by.godevelopment.firebasefirestorelearn.domain.models.UiText
+import by.godevelopment.firebasefirestorelearn.domain.models.UpdatePersonData
 import com.google.firebase.firestore.MetadataChanges
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.snapshots
 import com.google.firebase.firestore.ktx.toObject
@@ -22,6 +26,8 @@ interface FireStoreSourceBehavior {
 
     suspend fun loadPersonsByActive(active: Boolean): FireStoreResult<List<Person>>
 
+    suspend fun updatePerson(input: UpdatePersonData): FireStoreResult<Unit>
+
     class BaseImpl @Inject constructor() : FireStoreSourceBehavior {
 
         private val personCollectionRef = Firebase.firestore.collection(COLLECTION_NAME)
@@ -31,9 +37,7 @@ interface FireStoreSourceBehavior {
                 personCollectionRef.add(input).await()
                 FireStoreResult.Success(Unit)
             } catch (e: Exception) {
-                FireStoreResult.Error(
-                    message = e.message.toString()
-                )
+                FireStoreResult.Error(message = R.string.message_error_save_person)
             }
         }
 
@@ -43,7 +47,7 @@ interface FireStoreSourceBehavior {
                 val persons = querySnapshot.documents.mapNotNull { it.toObject<Person>() }
                 FireStoreResult.Success(value = persons)
             } catch (e: Exception) {
-                FireStoreResult.Error(message = e.message.toString())
+                FireStoreResult.Error(message = R.string.message_error_load_data)
             }
         }
 
@@ -67,7 +71,38 @@ interface FireStoreSourceBehavior {
 
                 FireStoreResult.Success(value = persons)
             } catch (e: Exception) {
-                FireStoreResult.Error(message = e.message.toString())
+                FireStoreResult.Error(message = R.string.message_error_load_data)
+            }
+        }
+
+        override suspend fun updatePerson(input: UpdatePersonData): FireStoreResult<Unit> {
+            val map = mapOf<String, Any>(
+                FIELD_NAME to input.newName
+            )
+
+            return try {
+                val oldPersonQuery = personCollectionRef
+                    .whereEqualTo(FIELD_NAME, input.oldName)
+                    .get()
+                    .await()
+
+                if (oldPersonQuery.documents.isNotEmpty()) {
+                    for (document in oldPersonQuery) {
+                        personCollectionRef
+                            .document(document.id)
+                            .set(
+                                map,
+                                SetOptions.merge()
+                            )
+                            .await()
+                    }
+                }
+                else {
+                    return FireStoreResult.Error(message = R.string.message_error_matched_person)
+                }
+                FireStoreResult.Success(Unit)
+            } catch (e: Exception) {
+                FireStoreResult.Error(message = R.string.message_error_updated_data)
             }
         }
 
