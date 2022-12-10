@@ -5,6 +5,7 @@
     <string name="message_error_save_person">Error: Person did not save.</string>
     <string name="cd_icon_person">Person</string>
     <string name="button_text_save">Save</string>
+    <string name="button_text_load">Load</string>
     <string name="ui_text_person_ready_state">Person ready state</string>
     <string name="label_1">Name length must be in 3..10</string>
     <string name="label_2">Enter Name</string>
@@ -13,4 +14,5 @@
     <string name="screen_name_save_person">Save person</string>
     <string name="screen_name_load_person">Load person</string>
     <string name="screen_name_list_persons">List persons</string>
+    <string name="message_error_load_data">Error: Data is not loaded.</string>
 </resources>

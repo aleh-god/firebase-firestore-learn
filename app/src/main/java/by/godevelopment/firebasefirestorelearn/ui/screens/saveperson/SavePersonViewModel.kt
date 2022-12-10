@@ -7,24 +7,25 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.godevelopment.firebasefirestorelearn.R
-import by.godevelopment.firebasefirestorelearn.data.sources.FireStoreSourceBehavior
-import by.godevelopment.firebasefirestorelearn.di.IoDispatcher
 import by.godevelopment.firebasefirestorelearn.domain.models.FireStoreResult
 import by.godevelopment.firebasefirestorelearn.domain.models.Person
 import by.godevelopment.firebasefirestorelearn.domain.models.UiText
+import by.godevelopment.firebasefirestorelearn.ui.interfaces.SavePersonRepository
+import by.godevelopment.firebasefirestorelearn.ui.interfaces.SubscribeToPersonsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class SavePersonViewModel @Inject constructor(
-    private val fireStoreSourceBehavior: FireStoreSourceBehavior,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
+    private val savePersonRepository: SavePersonRepository,
+    private val subscribeToPersonsRepository: SubscribeToPersonsRepository
 ) : ViewModel() {
 
     var uiState by mutableStateOf(UiState())
@@ -32,6 +33,37 @@ class SavePersonViewModel @Inject constructor(
 
     private val _savePersonUiEvent = Channel<SavePersonUiEvent>()
     val savePersonUiEvent: Flow<SavePersonUiEvent> = _savePersonUiEvent.receiveAsFlow()
+
+    private var fetchJob: Job? = null
+
+    init {
+        toSubscribeToPersons()
+    }
+
+    private fun toSubscribeToPersons() {
+        fetchJob?.cancel()
+        fetchJob = viewModelScope.launch {
+            subscribeToPersonsRepository
+                .getObservablePersons()
+                .onStart { uiState = uiState.copy(isProcessing = true) }
+                .catch {
+                    uiState = uiState.copy(isProcessing = false)
+                    _savePersonUiEvent.send(
+                        SavePersonUiEvent.ShowSnackbar(
+                            UiText.StringResource(
+                                resId = R.string.message_error_load_data
+                            )
+                        )
+                    )
+                }
+                .collect {
+                    uiState = uiState.copy(
+                        isProcessing = false,
+                        personsCount = it.size
+                    )
+                }
+        }
+    }
 
     fun onEvent(event: SavePersonUserEvent) {
         when (event) {
@@ -47,7 +79,6 @@ class SavePersonViewModel @Inject constructor(
             SavePersonUserEvent.OnSavePersonClick -> {
                 if (nameIsValid()) savePerson()
                 else {
-                    Log.i("TAG#SavePersonViewModel", "else -> $uiState.name")
                     viewModelScope.launch {
                         _savePersonUiEvent.send(
                             SavePersonUiEvent.ShowSnackbar(
@@ -63,11 +94,9 @@ class SavePersonViewModel @Inject constructor(
     }
 
     private fun savePerson() {
-        Log.i("TAG#SavePersonViewModel", "savePerson")
         viewModelScope.launch {
-            withContext(ioDispatcher) {
                 uiState = uiState.copy(isProcessing = true)
-                val result = fireStoreSourceBehavior.savePerson(
+                val result = savePersonRepository.savePerson(
                     Person(
                         name = uiState.name,
                         isReady = uiState.isReady
@@ -83,14 +112,12 @@ class SavePersonViewModel @Inject constructor(
                                     R.string.message_error_save_person
                                 }
                                 is FireStoreResult.Success -> {
-                                    Log.i("TAG#SavePersonViewModel", "FireStoreResult.Success")
                                     R.string.message_success_save_person
                                 }
                             }
                         )
                     )
                 )
-            }
         }
     }
 
@@ -101,6 +128,7 @@ class SavePersonViewModel @Inject constructor(
     }
 
     data class UiState(
+        val personsCount: Int = 0,
         val name: String = "",
         val isReady: Boolean = false,
         val isProcessing: Boolean = false,

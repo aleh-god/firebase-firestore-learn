@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import by.godevelopment.firebasefirestorelearn.R
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -49,6 +50,15 @@ fun SavePersonScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+
+        Text(
+            text = "Persons count = ${viewModel.uiState.personsCount}",
+            style = MaterialTheme.typography.h6,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 4.dp)
+        )
 
         if (viewModel.uiState.isProcessing) LinearProgressIndicator()
 
