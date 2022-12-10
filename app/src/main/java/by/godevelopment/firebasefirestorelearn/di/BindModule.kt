@@ -2,10 +2,7 @@ package by.godevelopment.firebasefirestorelearn.di
 
 import by.godevelopment.firebasefirestorelearn.data.repositories.RepositoryImplementation
 import by.godevelopment.firebasefirestorelearn.data.sources.FireStoreSourceBehavior
-import by.godevelopment.firebasefirestorelearn.ui.interfaces.LoadPersonsByRepository
-import by.godevelopment.firebasefirestorelearn.ui.interfaces.PersonsListRepository
-import by.godevelopment.firebasefirestorelearn.ui.interfaces.SavePersonRepository
-import by.godevelopment.firebasefirestorelearn.ui.interfaces.SubscribeToPersonsRepository
+import by.godevelopment.firebasefirestorelearn.ui.interfaces.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -40,4 +37,9 @@ interface BindModule {
     fun repository_to_LoadPersonsByRepository(
         repositoryImplementation: RepositoryImplementation
     ): LoadPersonsByRepository
+
+    @Binds
+    fun repository_to_UpdatePersonRepository(
+        repositoryImplementation: RepositoryImplementation
+    ): UpdatePersonRepository
 }
