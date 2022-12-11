@@ -44,4 +44,9 @@ class RepositoryImplementation @Inject constructor(
             = withContext(ioDispatcher) {
         fireStoreSourceBehavior.updatePerson(input)
     }
+
+    override suspend fun deletePerson(name: String): FireStoreResult<Unit>
+            = withContext(ioDispatcher) {
+        fireStoreSourceBehavior.deletePerson(name)
+    }
 }

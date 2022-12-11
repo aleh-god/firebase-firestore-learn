@@ -5,7 +5,8 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -19,6 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import by.godevelopment.firebasefirestorelearn.R
+import by.godevelopment.firebasefirestorelearn.ui.composables.CustomButtonWithIcon
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -64,7 +66,7 @@ fun UpdatePersonScreen(
                 .padding(vertical = 4.dp)
         )
 
-        Spacer(Modifier.height(4.dp))
+        Spacer(Modifier.height(8.dp))
 
         TextField(
             singleLine = true,
@@ -105,7 +107,7 @@ fun UpdatePersonScreen(
                 .padding(vertical = 4.dp)
         )
 
-        Spacer(Modifier.height(4.dp))
+        Spacer(Modifier.height(8.dp))
 
         TextField(
             singleLine = true,
@@ -135,24 +137,24 @@ fun UpdatePersonScreen(
             },
         )
 
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(8.dp))
 
-        Button(
-            onClick = { viewModel.onEvent(UpdatePersonUserEvent.OnUpdatePersonClick) },
-            contentPadding = PaddingValues(
-                start = 20.dp,
-                top = 12.dp,
-                end = 20.dp,
-                bottom = 12.dp
-            )
-        ) {
-            Icon(
-                Icons.Filled.Person,
-                contentDescription = stringResource(R.string.cd_icon_person),
-                modifier = Modifier.size(ButtonDefaults.IconSize)
-            )
-            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-            Text(stringResource(R.string.button_text_update))
-        }
+        CustomButtonWithIcon(
+            onClick = {
+                viewModel.onEvent(UpdatePersonUserEvent.UpdatePersonOnClick)
+            },
+            buttonImage = Icons.Filled.Edit,
+            buttonText = R.string.button_text_update
+        )
+
+        Spacer(Modifier.height(8.dp))
+
+        CustomButtonWithIcon(
+            onClick = {
+                viewModel.onEvent(UpdatePersonUserEvent.DeletePersonOnClick)
+            },
+            buttonImage = Icons.Filled.Delete,
+            buttonText = R.string.button_text_delete
+        )
     }
 }
