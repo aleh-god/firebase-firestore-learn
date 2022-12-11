@@ -75,7 +75,7 @@ fun SavePersonScreen(
             ),
             value = viewModel.uiState.name,
             onValueChange = {
-                viewModel.onEvent(SavePersonUserEvent.OnNameChanged(it))
+                viewModel.onEvent(SavePersonUserEvent.NameChanged(it))
             },
             label = {
                 Text(
@@ -110,7 +110,7 @@ fun SavePersonScreen(
 
         CustomButtonWithIcon(
             onClick = {
-                viewModel.onEvent(SavePersonUserEvent.OnSavePersonClick)
+                viewModel.onEvent(SavePersonUserEvent.SavePersonOnClick)
             },
             buttonImage = Icons.Filled.Send,
             buttonText = R.string.button_text_save

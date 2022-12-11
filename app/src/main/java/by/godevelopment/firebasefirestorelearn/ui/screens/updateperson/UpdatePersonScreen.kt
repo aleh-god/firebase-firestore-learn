@@ -79,7 +79,7 @@ fun UpdatePersonScreen(
             ),
             value = viewModel.uiState.oldName,
             onValueChange = {
-                viewModel.onEvent(UpdatePersonUserEvent.OldNameOnChanged(it))
+                viewModel.onEvent(UpdatePersonUserEvent.OldNameChanged(it))
             },
             label = {
                 Text(
@@ -120,7 +120,7 @@ fun UpdatePersonScreen(
             ),
             value = viewModel.uiState.newName,
             onValueChange = {
-                viewModel.onEvent(UpdatePersonUserEvent.NewNameOnChanged(it))
+                viewModel.onEvent(UpdatePersonUserEvent.NewNameChanged(it))
             },
             label = {
                 Text(

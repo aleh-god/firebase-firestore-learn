@@ -6,7 +6,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import by.godevelopment.firebasefirestorelearn.R
 import by.godevelopment.firebasefirestorelearn.domain.models.FireStoreResult
 import by.godevelopment.firebasefirestorelearn.domain.models.Person
 import by.godevelopment.firebasefirestorelearn.domain.models.UiText
@@ -31,7 +30,7 @@ class LoadPersonsViewModel @Inject constructor(
 
     fun onEvent(event: LoadPersonsUserEvent) {
         when (event) {
-            LoadPersonsUserEvent.OnLoadPersonsClick -> loadPersonsByState()
+            LoadPersonsUserEvent.LoadPersonsOnClick -> loadPersonsByState()
             LoadPersonsUserEvent.PersonsReadyStateChanged -> {
                 uiState = uiState.copy(
                     personsReadyState = !uiState.personsReadyState

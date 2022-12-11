@@ -64,7 +64,7 @@ fun LoadPersonScreen(
 
         CustomButtonWithIcon(
             onClick = {
-                viewModel.onEvent(LoadPersonsUserEvent.OnLoadPersonsClick)
+                viewModel.onEvent(LoadPersonsUserEvent.LoadPersonsOnClick)
             },
             buttonImage =  Icons.Filled.Person,
             buttonText = R.string.button_text_load
