@@ -1,7 +1,10 @@
 package by.godevelopment.firebasefirestorelearn.ui.screens.loadpersons
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material.Checkbox
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ScaffoldState
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
@@ -9,11 +12,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import by.godevelopment.firebasefirestorelearn.R
+import by.godevelopment.firebasefirestorelearn.ui.composables.CustomButtonWithIcon
 import by.godevelopment.firebasefirestorelearn.ui.composables.ItemsList
 
 @Composable
@@ -59,23 +62,15 @@ fun LoadPersonScreen(
             onCheckedChange = { viewModel.onEvent(LoadPersonsUserEvent.PersonsReadyStateChanged) }
         )
 
-        Button(
-            onClick = { viewModel.onEvent(LoadPersonsUserEvent.OnLoadPersonsClick) },
-            contentPadding = PaddingValues(
-                start = 20.dp,
-                top = 12.dp,
-                end = 20.dp,
-                bottom = 12.dp
-            )
-        ) {
-            Icon(
-                Icons.Filled.Person,
-                contentDescription = stringResource(R.string.cd_icon_person),
-                modifier = Modifier.size(ButtonDefaults.IconSize)
-            )
-            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-            Text(stringResource(R.string.button_text_load))
-        }
+        CustomButtonWithIcon(
+            onClick = {
+                viewModel.onEvent(LoadPersonsUserEvent.OnLoadPersonsClick)
+            },
+            buttonImage =  Icons.Filled.Person,
+            buttonText = R.string.button_text_load
+        )
+
+        Spacer(Modifier.height(8.dp))
 
         ItemsList(
             isProcessing = viewModel.uiState.isProcessing,

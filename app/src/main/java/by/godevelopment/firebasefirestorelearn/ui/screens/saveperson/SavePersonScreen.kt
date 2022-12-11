@@ -5,7 +5,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Send
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -16,8 +16,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import by.godevelopment.firebasefirestorelearn.R
 import androidx.hilt.navigation.compose.hiltViewModel
+import by.godevelopment.firebasefirestorelearn.R
+import by.godevelopment.firebasefirestorelearn.ui.composables.CustomButtonWithIcon
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -37,7 +38,6 @@ fun SavePersonScreen(
                         message = event.message.asString(context)
                     )
                 }
-                else -> Unit
             }
         }
     }
@@ -51,6 +51,10 @@ fun SavePersonScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
+        if (viewModel.uiState.isProcessing) LinearProgressIndicator(
+            modifier = Modifier.fillMaxWidth()
+        )
+
         Text(
             text = "Persons count = ${viewModel.uiState.personsCount}",
             style = MaterialTheme.typography.h6,
@@ -60,8 +64,6 @@ fun SavePersonScreen(
                 .padding(vertical = 4.dp)
         )
 
-        if (viewModel.uiState.isProcessing) LinearProgressIndicator()
-
         TextField(
             singleLine = true,
             maxLines = 10,
@@ -69,17 +71,18 @@ fun SavePersonScreen(
                 imeAction = ImeAction.Done
             ),
             keyboardActions = KeyboardActions(
-                onDone = {keyboardController?.hide()}),
+                onDone = { keyboardController?.hide() }
+            ),
             value = viewModel.uiState.name,
             onValueChange = {
                 viewModel.onEvent(SavePersonUserEvent.OnNameChanged(it))
             },
             label = {
                 Text(
-                if (viewModel.uiState.hasError) stringResource(R.string.label_1)
-                else stringResource(R.string.label_2)
-            )
-                    },
+                    if (viewModel.uiState.hasError) stringResource(R.string.label_1)
+                    else stringResource(R.string.label_2)
+                )
+            },
             isError = viewModel.uiState.hasError,
             placeholder = {
                 Text(
@@ -105,22 +108,12 @@ fun SavePersonScreen(
             Text(text = stringResource(R.string.ui_text_person_ready_state))
         }
 
-        Button(
-            onClick = { viewModel.onEvent(SavePersonUserEvent.OnSavePersonClick) },
-            contentPadding = PaddingValues(
-                start = 20.dp,
-                top = 12.dp,
-                end = 20.dp,
-                bottom = 12.dp
-            )
-        ) {
-            Icon(
-                Icons.Filled.Person,
-                contentDescription = stringResource(R.string.cd_icon_person),
-                modifier = Modifier.size(ButtonDefaults.IconSize)
-            )
-            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-            Text(stringResource(R.string.button_text_save))
-        }
+        CustomButtonWithIcon(
+            onClick = {
+                viewModel.onEvent(SavePersonUserEvent.OnSavePersonClick)
+            },
+            buttonImage = Icons.Filled.Send,
+            buttonText = R.string.button_text_save
+        )
     }
 }
