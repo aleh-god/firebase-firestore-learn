@@ -43,7 +43,7 @@ class UpdatePersonViewModel @Inject constructor(
                     oldNameHasError = false
                 )
             }
-            UpdatePersonUserEvent.OnUpdatePersonClick -> {
+            UpdatePersonUserEvent.UpdatePersonOnClick -> {
                 if (namesIsValid()) updatePerson()
                 else {
                     viewModelScope.launch {
@@ -56,6 +56,12 @@ class UpdatePersonViewModel @Inject constructor(
                         )
                     }
                 }
+            }
+            UpdatePersonUserEvent.DeletePersonOnClick -> {
+                val oldNamesIsValid = (uiState.oldName.length in 3..10).also {
+                    uiState = uiState.copy(oldNameHasError = !it)
+                }
+                if (oldNamesIsValid) deletePerson()
             }
         }
     }
@@ -88,8 +94,29 @@ class UpdatePersonViewModel @Inject constructor(
         }
     }
 
+    private fun deletePerson() {
+        viewModelScope.launch {
+            uiState = uiState.copy(isProcessing = true)
+            val result = updatePersonRepository.deletePerson(uiState.oldName)
+            uiState = uiState.copy(isProcessing = false)
+            _updatePersonUiEvent.send(
+                UpdatePersonUiEvent.ShowSnackbar(
+                    UiText.StringResource(
+                        resId = when (result) {
+                            is FireStoreResult.Error -> {
+                                Log.i("TAG#UpdatePersonViewModel", "Error -> ${result.message}")
+                                result.message
+                            }
+                            is FireStoreResult.Success -> { R.string.message_success_delete_person }
+                        }
+                    )
+                )
+            )
+        }
+    }
+
     private fun namesIsValid(): Boolean {
-       val oldNamesIsValid = (uiState.oldName.length in 3..10).also {
+        val oldNamesIsValid = (uiState.oldName.length in 3..10).also {
             uiState = uiState.copy(oldNameHasError = !it)
         }
         val newNamesIsValid = (uiState.newName.length in 3..10).also {

@@ -3,7 +3,6 @@ package by.godevelopment.firebasefirestorelearn.data.sources
 import by.godevelopment.firebasefirestorelearn.R
 import by.godevelopment.firebasefirestorelearn.domain.models.FireStoreResult
 import by.godevelopment.firebasefirestorelearn.domain.models.Person
-import by.godevelopment.firebasefirestorelearn.domain.models.UiText
 import by.godevelopment.firebasefirestorelearn.domain.models.UpdatePersonData
 import com.google.firebase.firestore.MetadataChanges
 import com.google.firebase.firestore.SetOptions
@@ -27,6 +26,8 @@ interface FireStoreSourceBehavior {
     suspend fun loadPersonsByActive(active: Boolean): FireStoreResult<List<Person>>
 
     suspend fun updatePerson(input: UpdatePersonData): FireStoreResult<Unit>
+
+    suspend fun deletePerson(name: String): FireStoreResult<Unit>
 
     class BaseImpl @Inject constructor() : FireStoreSourceBehavior {
 
@@ -103,6 +104,30 @@ interface FireStoreSourceBehavior {
                 FireStoreResult.Success(Unit)
             } catch (e: Exception) {
                 FireStoreResult.Error(message = R.string.message_error_updated_data)
+            }
+        }
+
+        override suspend fun deletePerson(name: String): FireStoreResult<Unit> {
+            return try {
+                val oldPersonQuery = personCollectionRef
+                    .whereEqualTo(FIELD_NAME, name)
+                    .get()
+                    .await()
+
+                if (oldPersonQuery.documents.isNotEmpty()) {
+                    for (document in oldPersonQuery) {
+                        personCollectionRef
+                            .document(document.id)
+                            .delete()
+                            .await()
+                    }
+                }
+                else {
+                    return FireStoreResult.Error(message = R.string.message_error_matched_person)
+                }
+                FireStoreResult.Success(Unit)
+            } catch (e: Exception) {
+                FireStoreResult.Error(message = R.string.message_error_deleted_data)
             }
         }
 

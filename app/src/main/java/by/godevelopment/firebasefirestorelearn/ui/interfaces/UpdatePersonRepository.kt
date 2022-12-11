@@ -6,4 +6,6 @@ import by.godevelopment.firebasefirestorelearn.domain.models.UpdatePersonData
 interface UpdatePersonRepository {
 
     suspend fun updatePerson(input: UpdatePersonData): FireStoreResult<Unit>
+
+    suspend fun deletePerson(name: String): FireStoreResult<Unit>
 }
