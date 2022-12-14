@@ -42,7 +42,7 @@ class LoadPersonsViewModel @Inject constructor(
     private fun loadPersonsByState() {
         viewModelScope.launch {
             uiState = uiState.copy(isProcessing = true)
-            val result = loadPersonsByRepository.loadPersonsByActive(uiState.personsReadyState)
+            val result = loadPersonsByRepository.loadPersonsByReady(uiState.personsReadyState)
             when (result) {
                 is FireStoreResult.Error -> {
                     Log.i("TAG#", "loadPersonsByState: ${result.message}")

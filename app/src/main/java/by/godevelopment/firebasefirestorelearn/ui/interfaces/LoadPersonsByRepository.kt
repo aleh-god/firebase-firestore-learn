@@ -5,5 +5,5 @@ import by.godevelopment.firebasefirestorelearn.domain.models.Person
 
 interface LoadPersonsByRepository {
 
-    suspend fun loadPersonsByActive(isActive: Boolean): FireStoreResult<List<Person>>
+    suspend fun loadPersonsByReady(isReady: Boolean): FireStoreResult<List<Person>>
 }
