@@ -67,7 +67,7 @@ class SavePersonViewModel @Inject constructor(
 
     fun onEvent(event: SavePersonUserEvent) {
         when (event) {
-            is SavePersonUserEvent.OnNameChanged -> {
+            is SavePersonUserEvent.NameChanged -> {
                 uiState = uiState.copy(
                     name = event.name,
                     hasError = false
@@ -76,7 +76,7 @@ class SavePersonViewModel @Inject constructor(
             is SavePersonUserEvent.PersonReadyStateChanged -> {
                 uiState = uiState.copy(isReady = !uiState.isReady)
             }
-            SavePersonUserEvent.OnSavePersonClick -> {
+            SavePersonUserEvent.SavePersonOnClick -> {
                 if (nameIsValid()) savePerson()
                 else {
                     viewModelScope.launch {

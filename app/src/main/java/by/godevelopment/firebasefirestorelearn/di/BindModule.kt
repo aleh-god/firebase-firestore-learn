@@ -42,4 +42,9 @@ interface BindModule {
     fun repository_to_UpdatePersonRepository(
         repositoryImplementation: RepositoryImplementation
     ): UpdatePersonRepository
+
+    @Binds
+    fun repository_to_UpdatePersonsRepository(
+        repositoryImplementation: RepositoryImplementation
+    ): UpdatePersonsRepository
 }

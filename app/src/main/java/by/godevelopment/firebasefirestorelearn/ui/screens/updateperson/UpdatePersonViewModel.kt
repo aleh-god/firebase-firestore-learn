@@ -31,13 +31,13 @@ class UpdatePersonViewModel @Inject constructor(
 
     fun onEvent(event: UpdatePersonUserEvent) {
         when (event) {
-            is UpdatePersonUserEvent.OldNameOnChanged -> {
+            is UpdatePersonUserEvent.OldNameChanged -> {
                 uiState = uiState.copy(
                     oldName = event.oldName,
                     oldNameHasError = false
                 )
             }
-            is UpdatePersonUserEvent.NewNameOnChanged -> {
+            is UpdatePersonUserEvent.NewNameChanged -> {
                 uiState = uiState.copy(
                     newName = event.newName,
                     oldNameHasError = false

@@ -1,8 +1,8 @@
 package by.godevelopment.firebasefirestorelearn.ui.composables
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -22,7 +22,9 @@ fun ItemsList(
             .fillMaxSize()
             .padding(8.dp)
     ) {
-        if (isProcessing) LinearProgressIndicator()
+        if (isProcessing) LinearProgressIndicator(
+            modifier = Modifier.fillMaxWidth()
+        )
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(persons) { person ->
                 PersonItem(name = person.name, isActive = person.isReady)
