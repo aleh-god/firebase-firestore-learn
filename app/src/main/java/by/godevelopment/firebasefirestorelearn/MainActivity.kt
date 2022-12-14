@@ -15,6 +15,7 @@ import by.godevelopment.firebasefirestorelearn.ui.screens.loadpersons.LoadPerson
 import by.godevelopment.firebasefirestorelearn.ui.screens.personslist.PersonsListScreen
 import by.godevelopment.firebasefirestorelearn.ui.screens.saveperson.SavePersonScreen
 import by.godevelopment.firebasefirestorelearn.ui.screens.updateperson.UpdatePersonScreen
+import by.godevelopment.firebasefirestorelearn.ui.screens.updatepersons.UpdatePersonsScreen
 import by.godevelopment.firebasefirestorelearn.ui.screens.welcome.WelcomeScreen
 import by.godevelopment.firebasefirestorelearn.ui.theme.FirebaseFirestoreLearnTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -63,6 +64,9 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(Route.LIST_PERSONS.label) {
                             PersonsListScreen(scaffoldState = scaffoldState, contentPadding = padding)
+                        }
+                        composable(Route.UPDATE_PERSONS.label) {
+                            UpdatePersonsScreen(scaffoldState = scaffoldState, contentPadding = padding)
                         }
                     }
                 }

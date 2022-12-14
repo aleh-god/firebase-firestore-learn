@@ -6,25 +6,32 @@
     <string name="message_error_save_person">Error: Person did not save.</string>
     <string name="message_error_load_data">Error: Data is not loaded.</string>
     <string name="message_error_updated_data">Error: Data is not updated.</string>
+    <string name="message_error_value_empty">Error: Value is empty.</string>
+    <string name="save_person_screen_error_message">Name is not validated</string>
+    <string name="update_person_screen_error_message">Names are not validated</string>
+    <string name="message_error_matched_person">No person matched the query.</string>
+    <string name="message_success_delete_person">Person is deleted</string>
+    <string name="message_error_deleted_data">Error: Data is not deleted.</string>
 
     <string name="cd_button_default">This is button</string>
+    <string name="cd_person_is_active">person is active status</string>
 
     <string name="button_text_save">Save</string>
     <string name="button_text_load">Load</string>
     <string name="button_text_update">Update</string>
+    <string name="button_text_delete">Delete</string>
+    <string name="button_text_get_delete">Get and delete</string>
+
     <string name="ui_text_person_ready_state">Person ready state</string>
+    <string name="ui_text_del_persons_count">Persons deleted count = </string>
     <string name="label_1">Name length must be in 3..10</string>
     <string name="label_2">Enter Name</string>
-    <string name="save_person_screen_error_message">Name is not validated</string>
-    <string name="update_person_screen_error_message">Names are not validated</string>
+
+
     <string name="screen_name_welcome">Welcome screen</string>
     <string name="screen_name_save_person">Save person</string>
     <string name="screen_name_load_person">Load person</string>
-    <string name="screen_name_update_person">Update persons</string>
+    <string name="screen_name_update_person">Update person</string>
+    <string name="screen_name_update_persons">Update persons</string>
     <string name="screen_name_list_persons">List persons</string>
-    <string name="message_error_matched_person">No person matched the query.</string>
-    <string name="cd_person_is_active">person is active status</string>
-    <string name="button_text_delete">Delete</string>
-    <string name="message_success_delete_person">Person is deleted</string>
-    <string name="message_error_deleted_data">Error: Data is not deleted.</string>
 </resources>
