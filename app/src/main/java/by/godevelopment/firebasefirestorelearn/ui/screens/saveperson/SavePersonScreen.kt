@@ -56,7 +56,8 @@ fun SavePersonScreen(
         )
 
         Text(
-            text = "Persons count = ${viewModel.uiState.personsCount}",
+            text = stringResource(R.string.ui_header_text_pers_count)
+                    + viewModel.uiState.personsCount,
             style = MaterialTheme.typography.h6,
             textAlign = TextAlign.Center,
             modifier = Modifier
@@ -66,7 +67,6 @@ fun SavePersonScreen(
 
         TextField(
             singleLine = true,
-            maxLines = 10,
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Done
             ),
@@ -79,16 +79,13 @@ fun SavePersonScreen(
             },
             label = {
                 Text(
-                    if (viewModel.uiState.hasError) stringResource(R.string.label_1)
-                    else stringResource(R.string.label_2)
+                    if (viewModel.uiState.hasError) stringResource(R.string.label_error_name)
+                    else stringResource(R.string.label_name)
                 )
             },
             isError = viewModel.uiState.hasError,
             placeholder = {
-                Text(
-                    text = if (viewModel.uiState.hasError) stringResource(R.string.label_2)
-                    else stringResource(R.string.label_1)
-                )
+                Text(text = stringResource(R.string.placeholder_name))
             },
         )
 

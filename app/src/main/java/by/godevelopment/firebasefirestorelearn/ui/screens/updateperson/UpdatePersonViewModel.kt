@@ -40,7 +40,7 @@ class UpdatePersonViewModel @Inject constructor(
             is UpdatePersonUserEvent.NewNameChanged -> {
                 uiState = uiState.copy(
                     newName = event.newName,
-                    oldNameHasError = false
+                    newNameHasError = false
                 )
             }
             UpdatePersonUserEvent.UpdatePersonOnClick -> {

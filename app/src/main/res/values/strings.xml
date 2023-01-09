@@ -18,6 +18,7 @@
 
     <string name="button_text_save">Save</string>
     <string name="button_text_load">Load</string>
+    <string name="button_text_register">Register</string>
     <string name="button_text_update">Update</string>
     <string name="button_text_delete">Delete</string>
     <string name="button_text_get_delete">Get and delete</string>
@@ -25,13 +26,30 @@
     <string name="ui_text_person_ready_state">Person ready state</string>
     <string name="ui_text_del_persons_count">Persons deleted count = </string>
     <string name="label_1">Name length must be in 3..10</string>
-    <string name="label_2">Enter Name</string>
-
+    <string name="label_error_name">Name has error</string>
+    <string name="label_error_email">Email has error</string>
+    <string name="label_error_password">Password has error</string>
+    <string name="label_name">Name</string>
+    <string name="label_new_name">New name</string>
+    <string name="label_old_name">old name</string>
+    <string name="label_email">Email</string>
+    <string name="label_password">Password</string>
+    <string name="placeholder_name">Enter Name</string>
+    <string name="placeholder_new_name">Enter new name</string>
+    <string name="placeholder_old_name">Enter old name</string>
+    <string name="placeholder_email">Enter Email</string>
+    <string name="placeholder_password">Enter Password</string>
 
     <string name="screen_name_welcome">Welcome screen</string>
+    <string name="screen_user_register">Register screen</string>
     <string name="screen_name_save_person">Save person</string>
     <string name="screen_name_load_person">Load person</string>
     <string name="screen_name_update_person">Update person</string>
     <string name="screen_name_update_persons">Update persons</string>
     <string name="screen_name_list_persons">List persons</string>
+    <string name="button_text_back">Back</string>
+    <string name="ui_text_header_register">Register</string>
+    <string name="ui_header_text_pers_count">\"Persons count = \"</string>
+    <string name="ui_text_old_name_value">Old name value:</string>
+    <string name="ui_text_new_name_value">New name value:</string>
 </resources>
