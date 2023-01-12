@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import by.godevelopment.firebasefirestorelearn.domain.models.Person
 
@@ -31,4 +32,38 @@ fun ItemsList(
             }
         }
     }
+}
+
+@Preview(name = "Preview View", showBackground = true, backgroundColor = 0xFFC7BCA1)
+@Composable
+fun PItemsListPreview() {
+    ItemsList(
+        isProcessing = false,
+        persons = listOf<Person>(
+            Person(
+                name = "true Person",
+                isReady = true
+            ),
+            Person(
+                name = "false Person",
+                isReady = false
+            ),
+            Person(
+                name = "true Person",
+                isReady = true
+            ),
+            Person(
+                name = "false Person",
+                isReady = false
+            ),
+            Person(
+                name = "true Person",
+                isReady = true
+            ),
+            Person(
+                name = "false Person",
+                isReady = false
+            )
+        )
+    )
 }

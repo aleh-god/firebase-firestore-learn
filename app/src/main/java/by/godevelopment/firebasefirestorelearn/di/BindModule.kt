@@ -2,6 +2,8 @@ package by.godevelopment.firebasefirestorelearn.di
 
 import by.godevelopment.firebasefirestorelearn.data.repositories.RepositoryImplementation
 import by.godevelopment.firebasefirestorelearn.data.sources.FireStoreSourceBehavior
+import by.godevelopment.firebasefirestorelearn.domain.usecases.ValidateEmailUseCase
+import by.godevelopment.firebasefirestorelearn.domain.usecases.ValidatePasswordUseCase
 import by.godevelopment.firebasefirestorelearn.ui.interfaces.*
 import dagger.Binds
 import dagger.Module
@@ -47,4 +49,14 @@ interface BindModule {
     fun repository_to_UpdatePersonsRepository(
         repositoryImplementation: RepositoryImplementation
     ): UpdatePersonsRepository
+
+    @Binds
+    fun baseImpl_to_ValidateEmailUseCase(
+        validateEmailUseCase: ValidateEmailUseCase.BaseImpl
+    ): ValidateEmailUseCase
+
+    @Binds
+    fun baseImpl_to_ValidatePasswordUseCase(
+        validatePasswordUseCase: ValidatePasswordUseCase.BaseImpl
+    ): ValidatePasswordUseCase
 }

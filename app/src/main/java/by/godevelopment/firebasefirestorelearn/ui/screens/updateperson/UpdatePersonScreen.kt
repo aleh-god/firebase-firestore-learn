@@ -58,7 +58,7 @@ fun UpdatePersonScreen(
         )
 
         Text(
-            text = "Old name value:",
+            text = stringResource(R.string.ui_text_old_name_value),
             style = MaterialTheme.typography.subtitle1,
             textAlign = TextAlign.Center,
             modifier = Modifier
@@ -83,23 +83,20 @@ fun UpdatePersonScreen(
             },
             label = {
                 Text(
-                    if (viewModel.uiState.oldNameHasError) stringResource(R.string.label_1)
-                    else stringResource(R.string.label_2)
+                    if (viewModel.uiState.oldNameHasError) stringResource(R.string.label_error_name)
+                    else stringResource(R.string.label_old_name)
                 )
             },
             isError = viewModel.uiState.oldNameHasError,
             placeholder = {
-                Text(
-                    text = if (viewModel.uiState.oldNameHasError) stringResource(R.string.label_2)
-                    else stringResource(R.string.label_1)
-                )
+                Text(text = stringResource(R.string.placeholder_old_name))
             },
         )
 
         Spacer(Modifier.height(16.dp))
 
         Text(
-            text = "New name value:",
+            text = stringResource(R.string.ui_text_new_name_value),
             style = MaterialTheme.typography.subtitle1,
             textAlign = TextAlign.Center,
             modifier = Modifier
@@ -124,16 +121,13 @@ fun UpdatePersonScreen(
             },
             label = {
                 Text(
-                    if (viewModel.uiState.newNameHasError) stringResource(R.string.label_1)
-                    else stringResource(R.string.label_2)
+                    if (viewModel.uiState.newNameHasError) stringResource(R.string.label_error_name)
+                    else stringResource(R.string.label_new_name)
                 )
             },
             isError = viewModel.uiState.newNameHasError,
             placeholder = {
-                Text(
-                    text = if (viewModel.uiState.newNameHasError) stringResource(R.string.label_2)
-                    else stringResource(R.string.label_1)
-                )
+                Text(text = stringResource(R.string.placeholder_new_name))
             },
         )
 
